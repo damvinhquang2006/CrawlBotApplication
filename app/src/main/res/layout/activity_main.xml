@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F2F5"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <!-- Top App Bar Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1565C0"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CRAWL BOT - THỜI TIẾT &amp; GIÁ XĂNG"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Thu thập &amp; phát thông tin định kỳ dạng JSON lên điện thoại di động"
+            android:textColor="#BBDEFB"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- Server Control Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="6dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <!-- Server URL row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:text="Host Bot:"
+                    android:textColor="#37474F"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edtServerUrl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="http://10.0.2.2:8080/api/"
+                    android:inputType="textUri"
+                    android:singleLine="true"
+                    android:text="http://10.0.2.2:8080/api/"
+                    android:textColor="#212121"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- API Token Security row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:text="API Token:"
+                    android:textColor="#37474F"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edtApiToken"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="crawlbot_secret_token_2026"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:text="crawlbot_secret_token_2026"
+                    android:textColor="#212121"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- Action buttons row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnSync"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#1976D2"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="Đồng bộ"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/btnTriggerCrawl"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#37474F"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="Crawl Bot"
+                    android:textSize="11sp" />
+
+                <Button
+                    android:id="@+id/btnAutoSyncToggle"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1.2"
+                    android:backgroundTint="#2E7D32"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="Phát Tự Động: BẬT"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <!-- Status and Progress -->
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Sẵn sàng kết nối với Bot Server"
+                android:textColor="#546E7A"
+                android:textSize="11sp" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:indeterminate="true"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Navigation Tab Buttons Row (4 Tabs) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="6dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/tabGasoline"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="1"
+            android:backgroundTint="#1976D2"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingHorizontal="2dp"
+            android:text="⛽ Giá Xăng"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/tabWeather"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="1"
+            android:backgroundTint="#9E9E9E"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingHorizontal="2dp"
+            android:text="🌤️ Thời Tiết"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/tabJson"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="2dp"
+            android:layout_weight="1"
+            android:backgroundTint="#9E9E9E"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingHorizontal="2dp"
+            android:text="📜 JSON Bot"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/tabEvents"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:backgroundTint="#9E9E9E"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingHorizontal="2dp"
+            android:text="🔔 Nhật Ký"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- Tab 1: Gasoline List Container -->
+    <FrameLayout
+        android:id="@+id/layoutGasoline"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="visible">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewGasoline"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="12dp" />
+    </FrameLayout>
+
+    <!-- Tab 2: Weather Forecast Container -->
+    <ScrollView
+        android:id="@+id/layoutWeather"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="10dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
+
+            <!-- Weather Hero Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="6dp"
+                app:cardBackgroundColor="#E8F5E9"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tvWeatherLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🌤️ Dự báo thời tiết Hà Nội"
+                        android:textColor="#2E7D32"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvWeatherTemp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="26.5°C"
+                            android:textColor="#1B5E20"
+                            android:textSize="36sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvWeatherCondition"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:background="#C8E6C9"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:text="Mây rải rác"
+                            android:textColor="#1B5E20"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvWeatherUpdated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Cập nhật bởi Bot lúc: 2026-10-19 01:05:00"
+                        android:textColor="#558B2F"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Detailed Metrics Grid Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="6dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CHỈ SỐ KHÍ TƯỢNG CHI TIẾT"
+                        android:textColor="#37474F"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="8dp"
+                        android:background="#E0E0E0" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="💧 Độ ẩm:"
+                            android:textColor="#424242"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tvWeatherHumidity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="87%"
+                            android:textColor="#0277BD"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="💨 Tốc độ gió:"
+                            android:textColor="#424242"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tvWeatherWind"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2.19 km/giờ"
+                            android:textColor="#00838F"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="☀️ Chỉ số UV:"
+                            android:textColor="#424242"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tvWeatherUv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 (Thấp)"
+                            android:textColor="#E65100"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="🌧️ Khả năng mưa:"
+                            android:textColor="#424242"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tvWeatherPrecip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10%"
+                            android:textColor="#1565C0"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="🌐 Nguồn Crawl:"
+                            android:textColor="#424242"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tvWeatherSource"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="https://thoitiet.vn/ha-noi"
+                            android:textColor="#5E35B1"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Tab 3: JSON Raw Payload Viewer Container -->
+    <LinearLayout
+        android:id="@+id/layoutJson"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp"
+        android:visibility="gone">
+
+        <!-- JSON sub-tabs -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="4dp">
+
+            <Button
+                android:id="@+id/btnJsonSummary"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:backgroundTint="#00695C"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Tổng Hợp"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/btnJsonWeather"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:backgroundTint="#78909C"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Thời Tiết"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/btnJsonGasoline"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:backgroundTint="#78909C"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Giá Xăng"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/btnCopyJson"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:backgroundTint="#D81B60"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="📋 Copy"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <!-- Monospace Raw JSON Box -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="#212121"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvRawJson"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:padding="12dp"
+                        android:text="{\n  &quot;message&quot;: &quot;Chưa có dữ liệu JSON. Bấm Đồng bộ để tải.&quot;\n}"
+                        android:textColor="#80D8FF"
+                        android:textSize="12sp" />
+                </HorizontalScrollView>
+            </ScrollView>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <!-- Tab 4: Change Events History Container -->
+    <FrameLayout
+        android:id="@+id/layoutEvents"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewEvents"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="12dp" />
+    </FrameLayout>
+
+    <!-- Global Empty State Text -->
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginVertical="20dp"
+        android:text="Chưa có dữ liệu. Bấm 'Đồng bộ' để tải từ Crawler Server."
+        android:textColor="#9E9E9E"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+</LinearLayout>

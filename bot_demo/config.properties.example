@@ -1,0 +1,51 @@
+# ====================================================================
+# TEMPLATE CAU HINH BOT THEO DOI THOI TIET VA GIA XANG (JAVA + PYTHON)
+# ====================================================================
+# Huong dan: Copy file nay thanh "config.properties" va dien cac thong so cua ban.
+# File "config.properties" thuc te da duoc them vao .gitignore de bao mat.
+
+# Tan suat quet kiem tra dinh ky (12 tieng = 21600 giay theo yeu cau hieu nang)
+bot.poll.interval.seconds=21600
+
+# Thoi gian timeout toi da cho moi tien trinh crawl Python (giay)
+bot.process.timeout.seconds=30
+
+# Chế độ cho phép kết nối Local Mock Server (127.0.0.1 / localhost)
+# Mac dinh 'false' de bao ve phong chong SSRF (Server-Side Request Forgery)
+# Chuyen sang 'true' khi can test cuc bo bang start_mock_server.bat (chay tai http://localhost:8085)
+bot.allow.local.mock=false
+
+# Danh sach cac domain hop le duoc phep thu thap (Whitelist phong ngua SSRF)
+bot.allowed.domains=thoitiet.vn,webgia.com,vnexpress.net,accuweather.com,dataservice.accuweather.com
+
+# Lenh thuc thi Python tren he thong (Mac dinh: py hoac python)
+python.command=py
+
+# Cong REST API Server de Android Client ket noi (Mac dinh: 8080)
+# Luu y: Tranh dung trung voi cong cua XAMPP, Apache hoac Tomcat
+server.api.port=8080
+
+# Token xac thuc bao mat cho API (Client gui qua header Authorization: Bearer <token> hoac X-API-Key)
+server.api.auth.token=crawlbot_secret_token_2026
+
+# Gioi han tan suat goi crawl thu cong (/api/crawl/trigger) tinh bang giay de tranh DoS/spam
+crawl.trigger.cooldown.seconds=60
+
+# Duong dan file co so du lieu SQLite tren Server
+database.path=data/crawler_server.db
+
+# ====================================================================
+# CAU HINH ACCUWEATHER DEVELOPER API
+# ====================================================================
+# Dang ky mien phi tai https://developer.accuweather.com (50 calls/ngay)
+# Dien API Key duoc cap tai day (de trong se bo qua khong crawl de tranh loi N/A):
+accuweather.api.key=YOUR_ACCUWEATHER_API_KEY_HERE
+accuweather.location.key=353412
+
+# ====================================================================
+# DANH SACH CAC TRANG VA NGUON DU LIEU THEO DOI
+# ====================================================================
+targets=\
+thoitiet_live|Dự báo thời tiết Hà Nội (Live)|https://thoitiet.vn/ha-noi|weather;\
+giaxang_petrolimex|Giá xăng dầu Petrolimex (Live)|https://webgia.com/gia-xang-dau/petrolimex/|gasoline;\
+vnexpress_gas|Giá xăng dầu VnExpress (Chuyên đề & Bài mới)|https://vnexpress.net/chu-de/gia-xang-dau-3026|vnexpress_gasoline
